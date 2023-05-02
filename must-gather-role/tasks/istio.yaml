@@ -1,0 +1,10 @@
+---
+#Task for istio must-gather
+- name: Obtener must-gather de Istio
+  command: oc adm must-gather --dest-dir=/tmp/must-gather-istio --image=registry.redhat.io/openshift-service-mesh/istio-must-gather-rhel8:{{ istio_version }}
+  changed_when: false
+
+- name: Comprimir must-gather de Istio
+  command: tar czf /tmp/must-gather-istio.tar.gz -C /tmp must-gather-istio
+  changed_when: false
+

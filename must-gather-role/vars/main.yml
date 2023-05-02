@@ -1,0 +1,20 @@
+---
+# vars file for must-gather-role
+#
+# OPENSHIFT
+openshift_version: "4.8"
+oc_username: "kubeadmin"
+oc_password: "{{ lookup('env', 'OPENSHIFT_PASSWORD') }}"
+oc_server_url: "{{ lookup('env', 'OPENSHIFT_API') }}"
+
+# OPERATORS
+istio_version: "2.3.3"
+oadp_version: "6.1.1"
+acm_version: "1.1.1"
+
+#RED HAT SFTP
+sftp_server: "example.com"
+sftp_user: "user"
+sftp_password: "password"
+sftp_remote_path: "/path/to/remote/folder"
+

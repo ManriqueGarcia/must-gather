@@ -1,0 +1,11 @@
+---
+# tasks file for must-gather-role
+
+- name: Login to OpenShift
+  shell: |
+    oc login --username={{ oc_username }} --password={{ oc_password }} --server={{ oc_server_url }} --insecure-skip-tls-verify
+
+- name: Istio must-gather
+  import_tasks: istio.yaml
+  tags: istio
+

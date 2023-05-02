@@ -2,52 +2,6 @@
 - name: Obtener must-gather de OpenShift, Istio, OADP y ADM y subirlos a través de SFTP
   hosts: localhost
   gather_facts: false
-  vars:
-    openshift_version: "4.8"
-    istio_version: "2.3.3"
-    oadp_version: "6.1.1"
-    adm_version: "1.1.1"
-    sftp_server: "example.com"
-    sftp_user: "user"
-    sftp_password: "password"
-    sftp_remote_path: "/path/to/remote/folder"
-    oc_username: "kubeadmin"
-    oc_password: "{{ lookup('env', 'OPENSHIFT_PASSWORD') }}"
-    oc_server_url: "https://api.test48.sandbox1751.opentlc.com:6443"
   tasks:
-    - name: Login to OpenShift
-      shell: |
-        oc login --username={{ oc_username }} --password={{ oc_password }} --server={{ oc_server_url }}
-
-    - name: Obtener must-gather de OpenShift
-      command: oc adm must-gather --dest-dir=/tmp/must-gather
-      changed_when: false
-    
-    - name: Comprimir must-gather de OpenShift
-      command: tar czf /tmp/must-gather-openshift.tar.gz -C /tmp must-gather
-      changed_when: false
-    
-    - name: Obtener must-gather de Istio
-      command: oc adm must-gather --dest-dir=/tmp/must-gather-istio --image=registry.redhat.io/openshift-service-mesh/istio-must-gather-rhel8:{{ istio_version }}
-      changed_when: false
-    
-    - name: Comprimir must-gather de Istio
-      command: tar czf /tmp/must-gather-istio.tar.gz -C /tmp must-gather-istio
-      changed_when: false
-        #
-        #    - name: Obtener must-gather de OADP
-        #      command: oc adm must-gather --dest-dir=/tmp/must-gather-oadp --image=registry.redhat.io/rhdp{{ oadp_version | regex_replace('\\.', '') }}-openshift{{ openshift_version | regex_replace('\\.', '') }}:latest
-        #      changed_when: false
-        #
-        #    - name: Comprimir must-gather de OADP
-        #      command: tar czf /tmp/must-gather-oadp.tar.gz -C /tmp must-gather-oadp
-        #      changed_when: false
-        #
-        #    - name: Obtener must-gather de ADM
-        #      command: oc adm must-gather --dest-dir=/tmp/must-gather-adm --image=registry.redhat.io/redhat-insights-{{ adm_version }}-openshift{{ openshift_version | regex_replace('\\.', '') }}:latest
-        #      changed_when: false
-        #
-        #    - name: Comprimir must-gather de ADM
-        #      command: tar czf /tmp/must-gather-adm.tar.gz -C /tmp must-gather-adm
-        #      changed_when: false
-        #
+    - import_role:
+        name: must-gather-role 
